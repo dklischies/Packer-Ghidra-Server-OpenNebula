@@ -1,0 +1,17 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  keyboard:
+    layout: EN
+    variant: us
+  identity:
+    hostname: ${hostname}
+    username: ghidra
+    password: "${ssh_password_crypted}"
+  early-commands:
+    # otherwise packer tries to connect and exceed max attempts:
+    - systemctl stop ssh
+  ssh:
+    install-server: true
+    allow-pw: yes

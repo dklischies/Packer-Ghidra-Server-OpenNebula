@@ -1,0 +1,5 @@
+ghidra_version       = "10.1.2"
+ghidra_filename      = "ghidra_10.1.2_PUBLIC_20220125.zip"
+hostname             = "host.example.com"
+ssh_password         = "root"
+ssh_password_crypted = "$6$root$N8eFzhP5TW/1Wl1YXkIGagZroL.BmOIKvdCEdFDgndVp1uiOE6pZOZ8e.I/.50xHwXH03TeV0/gBC1ylGDzyJ0"

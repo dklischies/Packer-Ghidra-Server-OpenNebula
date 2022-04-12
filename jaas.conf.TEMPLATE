@@ -1,0 +1,37 @@
+//
+// JAAS config file for GhidraServer when operating in -a4 mode.
+// Only the one section that you wish to enable should be called "auth".
+// All other sections will be ignored.
+
+
+
+
+//**********************************************************************************
+// Active Directory via LDAP
+//**********************************************************************************
+// The special string "{USERNAME}" in the authIdentity and userFilter parameters is replaced with the Ghidra user's name
+// at runtime by the LdapLoginModule, and should not be modified.
+//
+// The ldap DNS hostname for your Active Directory server needs to be fixed-up in the userProvider parameter,
+// and the domain name portion of your user's identity (ie. user@domain.tld) needs to be fixed up in the
+// authIdentity parameter, possibly the port number also (3269).
+//
+// In this mode, GhidraServer will bind to the LDAP server using the Ghidra user's name and password.  It will
+// then query for that same user (sAMAccountName={USERNAME}) to confirm that user's DN. 
+//
+// See https://docs.oracle.com/javase/8/docs/jre/api/security/jaas/spec/com/sun/security/auth/module/LdapLoginModule.html
+// for more information about the LdapLoginModule and its configuration.
+//
+// Do not use a plain "ldap" URI to connect to your LDAP server unless you want your user's
+// credentials to be visible as plaintext network traffic.
+//
+auth {
+	com.sun.security.auth.module.LdapLoginModule REQUIRED
+		userProvider="ldaps://freeipa.example.com636/cn=users,cn=accounts,dc=example,dc=com"
+		authIdentity="uid={USERNAME},cn=users,cn=accounts,dc=example,dc=com"
+		userFilter="(&(uid={USERNAME})(memberOf=cn=mygroup,cn=groups,cn=accounts,dc=example,dc=com)(objectClass=posixAccount))"
+		debug=true;
+};
+
+
+
